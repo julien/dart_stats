@@ -13,16 +13,19 @@ import 'dart:math';
 
 class Stats {
 
+  Stopwatch _timer = new Stopwatch();
   int _startTime;
   int _prevTime;
-  int _ms;
-  double _msMin;
-  double _msMax;
-  int _fps;
-  double _fpsMin;
-  double _fpsMax;
-  double _frames;
-  int _mode;
+
+
+  int _ms = 0;
+  double _msMin = 0.0;
+  double _msMax = 0.0;
+  int _fps = 0;
+  double _fpsMin = 0.0;
+  double _fpsMax = 0.0;
+  double _frames = 0.0;
+  int _mode = 0;
 
   DivElement _container;
   DivElement _fpsDiv;
@@ -32,89 +35,75 @@ class Stats {
   DivElement _msText;
   DivElement _msGraph;
 
-  void _initialize() {
-    _startTime = new Date.now().millisecondsSinceEpoch;
-    _prevTime = _startTime;
-    _ms = 0;
-    _msMin = 0.0;
-    _msMax = 0.0;
-    _fps = 0;
-    _fpsMin = 0.0;
-    _fpsMax = 0.0;
-    _frames = 0.0;
-    _mode = 0;
-  }
 
   void _containerMouseDown(MouseEvent e) {
     e.preventDefault();
-
     mode = ++mode % 2;
-    print('oops');
   }
 
   void _createUi() {
     SpanElement bar;
 
-    _container = new DivElement();
-    _container.id = 'stats';
-    _container.on.mouseDown.add(_containerMouseDown);
-    _container.style.cssText = '''
-      width:80px;opacity:0.9;cursor:pointer
-    ''';
+    _container = new DivElement()
+      ..id = 'stats'
+      ..on.mouseDown.add(_containerMouseDown, false)
+      ..style.cssText = '''
+        width:80px;opacity:0.9;cursor:pointer
+      ''';
 
-    _fpsDiv = new DivElement();
-    _fpsDiv.id = 'fps';
-    _fpsDiv.style.cssText = '''
-      padding:0 0 3px 3px;text-align:left;background-color:#002
-    ''';
+    _fpsDiv = new DivElement()
+      ..id = 'fps'
+      ..style.cssText = '''
+        padding:0 0 3px 3px;text-align:left;background-color:#002
+      ''';
     _container.append(_fpsDiv);
 
-    _fpsText = new DivElement();
-    _fpsText.id = 'fpsText';
-    _fpsText.style.cssText = '''
-      color:#0ff;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px
-    ''';
-    _fpsText.text = 'FPS';
+    _fpsText = new DivElement()
+      ..id = 'fpsText'
+      ..style.cssText = '''
+        color:#0ff;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px
+      '''
+      ..text = 'FPS';
     _fpsDiv.append(_fpsText);
 
-    _fpsGraph = new DivElement();
-    _fpsGraph.id = 'fpsGraph';
-    _fpsGraph.style.cssText = '''
-      position:relative;width:74px;height:30px;background-color:#0ff
-    ''';
+    _fpsGraph = new DivElement()
+      ..id = 'fpsGraph'
+      ..style.cssText = '''
+        position:relative;width:74px;height:30px;background-color:#0ff
+      ''';
     _fpsDiv.append(_fpsGraph);
 
     while (_fpsGraph.children.length < 74) {
-      bar = new SpanElement();
-      bar.style.cssText = 'width:1px;height:30px;float:left;background-color:#113';
+      bar = new SpanElement()
+        ..style.cssText = 'width:1px;height:30px;float:left;background-color:#113';
       _fpsGraph.append(bar);
     }
 
-    _msDiv = new DivElement();
-    _msDiv.id = 'msDiv';
-    _msDiv.style.cssText = '''
-      padding:0 0 3px 3px;text-align:left;background-color:#020;display:none
-    ''';
+    _msDiv = new DivElement()
+      ..id = 'msDiv'
+      ..style.cssText = '''
+        padding:0 0 3px 3px;text-align:left;background-color:#020;display:none
+      ''';
     _container.append(_msDiv);
 
-    _msText = new DivElement();
-    _msText.id = 'msText';
-    _msText.style.cssText = '''
-      color:#0f0;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px
-    ''';
-    _msText.text = 'MS';
+    _msText = new DivElement()
+      ..id = 'msText'
+      ..style.cssText = '''
+        color:#0f0;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px
+      '''
+      ..text = 'MS';
     _msDiv.append(_msText);
 
-    _msGraph = new DivElement();
-    _msGraph.id = 'msGraph';
-    _msGraph.style.cssText = '''
-      position:relative;width:74px;height:30px;background-color:#0f0
-    ''';
+    _msGraph = new DivElement()
+      ..id = 'msGraph'
+      ..style.cssText = '''
+        position:relative;width:74px;height:30px;background-color:#0f0
+      ''';
     _msDiv.append(_msGraph);
 
     while (_msGraph.children.length < 74) {
-      bar = new SpanElement();
-      bar.style.cssText = 'width:1px;height:30px;float:left;background-color:#131';
+      bar = new SpanElement()
+        ..style.cssText = 'width:1px;height:30px;float:left;background-color:#131';
       _msGraph.append(bar);
     }
   }
@@ -147,11 +136,13 @@ class Stats {
   Element domElement() => _container;
 
   void begin() {
-    _startTime = new Date.now().millisecondsSinceEpoch;
+    _startTime = _timer.elapsedMilliseconds;
+    _timer.stop();
+    _timer.start();
   }
 
   int end() {
-    int time = new Date.now().millisecondsSinceEpoch;
+    int time = _timer.elapsedMilliseconds;
     _ms = time - _startTime;
     _msMin = min(_msMin, _ms).toDouble();
     _msMax = max(_msMax, _ms).toDouble();
@@ -179,7 +170,8 @@ class Stats {
   }
 
   Stats() {
-    _initialize();
+    _startTime = _timer.elapsedMilliseconds;
+    _prevTime = _startTime;
     _createUi();
   }
 }
