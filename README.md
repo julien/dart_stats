@@ -2,6 +2,7 @@ dart stats
 ==========
 
 **description**
+
   [Dart](a href="http://www.dartlang.org") Performace monitor.
 
   Port of [stats.js](https://github.com/mrdoob/stats.js) to Dart
@@ -9,6 +10,7 @@ dart stats
   Dart version of this.
 
 **author**
+
 *Julien Castelain* <jcastelain@gmail.com>
 
 
