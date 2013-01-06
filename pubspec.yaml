@@ -1,0 +1,13 @@
+name:  dart_stats
+description:
+  Performace monitor.
+  Port of stats.js (https://github.com/mrdoob/stats.js) to Dart
+  thanks to MrDoob (http://mrdoob.com) for his great stuff, we needed a
+  Dart version of this.
+version: 0.0.1
+author: Julien Castelain <jcastelain@gmail.com>
+homepage: https://github.com/julien/stats.dart
+
+# no deps for the moment, nor tests :\
+#dependencies:
+#  unittest: any
