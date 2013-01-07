@@ -20,22 +20,22 @@ void main() {
   context = canvas.getContext('2d');
   context.fillStyle = 'rgba(127, 0, 25, 0.05)';
 
-  double interval = 16.0;
+  loop (num time) {
+    window.requestAnimationFrame(loop);
 
-  window.setInterval(() {
-    double time = new Date.now().millisecondsSinceEpoch * 0.001;
+    double t = new Date.now().millisecondsSinceEpoch * 0.001;
     context.clearRect(0, 0, canvas.width, canvas.height);
     stats.begin();
 
     for (int i = 0; i < 2000; i++) {
-      double x = cos(time + i * 0.01) * 196 + 256;
-      double y = sin(time + i * 0.01234) * 196 + 256;
+      double x = cos(t + i * 0.01) * 196 + 256;
+      double y = sin(t + i * 0.01234) * 196 + 256;
 
       context.beginPath();
       context.arc(x, y, 10, 0, PI * 2, true);
       context.fill();
     }
     stats.end();
-
-  }, interval.toInt());
+  }
+  window.requestAnimationFrame(loop);
 }

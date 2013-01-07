@@ -14,18 +14,17 @@ import 'dart:math';
 class Stats {
 
   Stopwatch _timer = new Stopwatch();
-  int _startTime;
-  int _prevTime;
-
 
   int _ms = 0;
-  double _msMin = 0.0;
-  double _msMax = 0.0;
+  int _msMin = 0;
+  int _msMax = 0;
   int _fps = 0;
-  double _fpsMin = 0.0;
-  double _fpsMax = 0.0;
-  double _frames = 0.0;
+  int _fpsMin = 0;
+  int _fpsMax = 0;
+  int _frames = 0;
   int _mode = 0;
+
+  bool _running = false;
 
   DivElement _container;
   DivElement _fpsDiv;
@@ -136,42 +135,41 @@ class Stats {
   Element domElement() => _container;
 
   void begin() {
-    _startTime = _timer.elapsedMilliseconds;
-    _timer.stop();
+    if (_running == false) {
     _timer.start();
+    _running = true;
+    }
   }
 
   int end() {
-    int time = _timer.elapsedMilliseconds;
-    _ms = time - _startTime;
-    _msMin = min(_msMin, _ms).toDouble();
-    _msMax = max(_msMax, _ms).toDouble();
+    int time = _timer.elapsedTicks;
+    _ms = (time / 1000.0).toInt();
+    _msMin = min(_msMin, _ms);
+    _msMax = max(_msMax, _ms);
 
     _msText.text = '${_ms} MS (${_msMin}-${_msMax})';
     _updateGraph(_msGraph, min(30, 30 - (_ms / 200) * 30));
     _frames++;
 
-    if (time > _prevTime + 1000) {
-      _fps = ((_frames * 1000) / (time - _prevTime)).toInt();
-
-      _fpsMin = min(_fpsMin, _fps).toDouble();
-      _fpsMax = max(_fpsMax, _fps).toDouble();
-
+    if (time > 1000) {
+      _fps = ((_frames * 1000) ~/ _ms).toInt();
+      _fpsMin = min(_fpsMin, _fps);
+      _fpsMax = max(_fpsMax, _fps);
       _fpsText.text = '${_fps} FPS (${_fpsMin}-${_fpsMax})';
+
       _updateGraph(_fpsGraph, min(30, 30 - (_fps / 100 ) * 30));
-      _prevTime = time;
-      _frames = 0.0;
+
+      _timer.reset();
+      _frames = 0;
     }
     return time;
   }
 
   void update() {
-    _startTime = end();
+    end();
   }
 
   Stats() {
-    _startTime = _timer.elapsedMilliseconds;
-    _prevTime = _startTime;
     _createUi();
   }
 }
