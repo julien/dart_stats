@@ -13,7 +13,9 @@ dart stats
 
 *Julien Castelain* <jcastelain@gmail.com>
 
-*update*
+update
+-------
+
 Looks like I duplicated [this](http://pub.dartlang.org/packages/stats) Dart package without noticing ... 
 I forked the original [Github repo](http://financecoding.github.com/stats.dart/), 
 and will try to get rid of this one on the [Dart Pub](http://pub.dartlang.org) to keep it simple 
