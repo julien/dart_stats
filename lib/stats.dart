@@ -128,7 +128,7 @@ class Stats {
 
   _updateGraph(Element dom, num value) {
     Element child = dom.children[0];
-    child.style.height = '${value.toString()}px';
+    child.style.height = '${value}px';
     dom.append(child);
   }
 
@@ -142,7 +142,7 @@ class Stats {
   }
 
   int end() {
-    int time = _timer.elapsedTicks;
+    int time = _timer.elapsedMicroseconds;
     _ms = (time / 1000.0).toInt();
     _msMin = min(_msMin, _ms);
     _msMax = max(_msMax, _ms);
