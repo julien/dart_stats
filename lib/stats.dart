@@ -15,24 +15,22 @@ class Stats {
 
   Stopwatch _timer = new Stopwatch();
 
-  int _ms = 0;
-  int _msMin = 0;
-  int _msMax = 0;
-  int _fps = 0;
-  int _fpsMin = 0;
-  int _fpsMax = 0;
-  int _frames = 0;
-  int _mode = 0;
+  int _ms = 0,
+      _msMin = 0,
+      _msMax = 0,
+      _fps = 0,
+      _fpsMin = 0,
+      _fpsMax = 0,
+      _frames = 0,
+      _mode = 0;
 
-  bool _running = false;
-
-  DivElement _container;
-  DivElement _fpsDiv;
-  DivElement _fpsText;
-  DivElement _fpsGraph;
-  DivElement _msDiv;
-  DivElement _msText;
-  DivElement _msGraph;
+  DivElement _container,
+             _fpsDiv,
+             _fpsText,
+             _fpsGraph,
+             _msDiv,
+             _msText,
+             _msGraph;
 
 
   void _containerMouseDown(MouseEvent e) {
@@ -135,10 +133,7 @@ class Stats {
   Element domElement() => _container;
 
   void begin() {
-    if (_running == false) {
     _timer.start();
-    _running = true;
-    }
   }
 
   int end() {
