@@ -1,7 +1,7 @@
 import 'dart:html';
 import 'dart:math';
 
-import '../lib/stats.dart';
+import '../lib/dart_stats.dart';
 
 Stats stats;
 CanvasElement canvas;
