@@ -43,7 +43,10 @@ class Stats {
 
     _container = new DivElement()
       ..id = 'stats'
-      ..on.mouseDown.add(_containerMouseDown, false)
+      // <= M3
+      // ..on.mouseDown.add(_containerMouseDown, false)
+      // >= M3
+      ..onMouseDown.listen(_containerMouseDown)
       ..style.cssText = '''
         width:80px;opacity:0.9;cursor:pointer
       ''';
