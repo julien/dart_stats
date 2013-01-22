@@ -2,7 +2,7 @@
 
 set -e
 
-PATH=$HOME/local/dart/chromium:$PATH
+PATH=$DART_SDK/chromium:$PATH
 results='DumpRenderTree index.html 2>&1'
 
 echo "$results" | grep CONSOLE
