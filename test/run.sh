@@ -4,8 +4,8 @@ set -e
 
 #####
 # Unit Tests
-echo "DumpRenderTree test/index.html"
-results=`DumpRenderTree test/index.html 2>&1`
+echo "DumpRenderTree index.html"
+results=`DumpRenderTree index.html 2>&1`
 
 echo "$results" | grep CONSOLE
 echo $results | grep 'unittest-suite-success' >/dev/null
