@@ -13,5 +13,5 @@ Dart version of this.
 
 **author**
 
-*Julien Castelain* <jcastelain@gmail.com>
+*Julien Castelain* <jcastelain@gmail.com>*
 
