@@ -13,6 +13,6 @@ Dart version of this.</del>
 
 <del>*Available at the Dart [pub](http://pub.dartlang.org)*</del>
 
-<del>**author**</del>
 
+<del>**author**</del>
 <del>*Julien Castelain* <jcastelain@gmail.com></del>
